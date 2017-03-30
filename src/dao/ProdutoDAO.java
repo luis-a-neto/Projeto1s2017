@@ -59,7 +59,8 @@ public class ProdutoDAO {
 					produtoCarregado.setPrecoCusto(resultado.getDouble("precoCusto"));
 					produtoCarregado.setPrecoVenda(resultado.getDouble("precoVenda"));
 					
-				} else {
+				}
+				else {
 					produtoCarregado.setId(-1);
 					produtoCarregado.setNome(null);
 					produtoCarregado.setDescricao(null);
@@ -71,7 +72,7 @@ public class ProdutoDAO {
 			}
 			catch (SQLException exception){
 					exception.printStackTrace();
-				}
+			}
 		}
 		catch (SQLException exception){
 			exception.printStackTrace();
