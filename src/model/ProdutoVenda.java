@@ -5,6 +5,7 @@ public class ProdutoVenda {
 	private Produto produto;
 	private Venda venda;
 	private int qtde;
+	private int id;
 	
 	public Produto getProduto() {
 		return produto;
@@ -30,9 +31,18 @@ public class ProdutoVenda {
 		this.qtde = qtde;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	@Override
 	public String toString(){
-		return	"Venda: "			+ venda.getId() +
+		return	"Id: "				+ getId() +
+				"; Venda: "			+ venda.getId() +
 				"; Quantidade: "	+ qtde +
 				"; Produto: "		+ produto.getDescricao();
 	}

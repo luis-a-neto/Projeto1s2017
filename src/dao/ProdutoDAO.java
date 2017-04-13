@@ -9,9 +9,9 @@ import model.Produto;
 public class ProdutoDAO {
 	
 	public int create(Produto produto){
-		// Usando o Try com Resources do Java 7, seja lá como isso funciona
+		// Usando o Try com Resources do Java 7, seja lá como isso funciona...
 		try (	Connection conexao = ConnectionFactory.obtemConexao();
-				PreparedStatement statement = conexao.prepareStatement("INSERT INTO Produto(precoCusto, precoVenda, nome, descricao, imagemURL) VALUES (?, ?, ?, ?, ?)")
+				PreparedStatement statement = conexao.prepareStatement("INSERT INTO Estoque (Preco_Custo, Preco_Venda, Nome, Descricao, Imagem_URL) VALUES (?, ?, ?, ?, ?)")
 			){
 			statement.setDouble(1, produto.getPrecoCusto());
 			statement.setDouble(2, produto.getPrecoVenda());
@@ -45,19 +45,20 @@ public class ProdutoDAO {
 		
 		// Usando o Try com Resources do Java 7, seja lá como isso funciona
 		try (	Connection conexao = ConnectionFactory.obtemConexao();
-				PreparedStatement statement = conexao.prepareStatement("SELECT * FROM Produto WHERE id = ?");
+				PreparedStatement statement = conexao.prepareStatement("SELECT * FROM Estoque WHERE Cod_Produto = ?");
 			){
 			
-			statement.setInt(1, produtoCarregado.getId());
+			statement.setInt(1, idProduto);
+			
 			try (ResultSet resultado = statement.executeQuery();) {
 				if (resultado.next()) {
 					produtoCarregado.setId(idProduto);
-					produtoCarregado.setNome(resultado.getString("nome"));
-					produtoCarregado.setDescricao(resultado.getString("descricao"));
-					produtoCarregado.setImagemURL(resultado.getString("imagemURL"));
-					produtoCarregado.setQtde(resultado.getInt("qtde"));
-					produtoCarregado.setPrecoCusto(resultado.getDouble("precoCusto"));
-					produtoCarregado.setPrecoVenda(resultado.getDouble("precoVenda"));
+					produtoCarregado.setNome(		resultado.getString("Nome")			);
+					produtoCarregado.setDescricao(	resultado.getString("Descricao")	);
+					produtoCarregado.setImagemURL(	resultado.getString("Imagem_URL")	);
+					produtoCarregado.setQtde(		resultado.getInt("Qtde")			);
+					produtoCarregado.setPrecoCusto(	resultado.getDouble("Preco_Custo")	);
+					produtoCarregado.setPrecoVenda(	resultado.getDouble("Preco_Venda")	);
 					
 				}
 				else {
@@ -84,7 +85,7 @@ public class ProdutoDAO {
 	public void update(Produto produto){
 		// Usando o Try com Resources do Java 7, seja lá como isso funciona
 		try (	Connection conexao = ConnectionFactory.obtemConexao();
-				PreparedStatement statement = conexao.prepareStatement("UPDATE Produto SET precoCusto = ?, precoVenda = ?, nome = ?, descricao = ?, imagemURL = ?, qtde = ?) WHERE id = ?")
+				PreparedStatement statement = conexao.prepareStatement("UPDATE Estoque SET Preco_Custo = ?, Preco_Venda = ?, Nome = ?, Descricao = ?, ImagemURL = ?, Qtde = ? WHERE Cod_Produto = ?")
 			){
 			statement.setDouble(1, produto.getPrecoCusto());
 			statement.setDouble(2, produto.getPrecoVenda());
@@ -101,14 +102,16 @@ public class ProdutoDAO {
 	}
 	
 	public void delete(int idProduto){
-		try (	Connection conn = ConnectionFactory.obtemConexao();
-				PreparedStatement stm = conn.prepareStatement("DELETE FROM Produtos WHERE id = ?");
+		try (	Connection conexao = ConnectionFactory.obtemConexao();
+				PreparedStatement statement = conexao.prepareStatement("DELETE FROM Estoque WHERE Cod_Produto = ?");
 			){
-			stm.setInt(1, idProduto);
-			stm.execute();
+			statement.setInt(1, idProduto);
+			statement.execute();
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
 	}
+	
+	// TODO: Listar produtos.
 }

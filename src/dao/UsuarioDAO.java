@@ -1,94 +1,75 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import model.Usuario;
 
-import model.Produto;
+// Imports para geração de senha.
+import java.security.SecureRandom;
+import java.math.BigInteger;
 
-public class UsuarioDAO {
+public class UsuarioDAO{
 	
-	
-	public int create(Usuario usuario){
-		// Usando o Try com Resources do Java 7, seja lá como isso funciona
+	public void create(Usuario usuario){ // Não retorna porque o login do usuário e a senha serão fornecidos previamente. Qualquer coisa, só resetar a senha depois!
+		
 		try (	Connection conexao = ConnectionFactory.obtemConexao();
-				PreparedStatement statement = conexao.prepareStatement("INSERT INTO Produto(login, senha, acesso) VALUES (?, ?, ?)")
+				PreparedStatement statement = conexao.prepareStatement("INSERT INTO Usuario(login, senha, acesso) VALUES (?, ?, ?)")
 			){
-			statement.setDouble(1, produto.getlogin());
-			statement.setDouble(2, produto.getsenha());
-			statement.setString(3, produto.getacesso());
+			statement.setString(1, usuario.getLogin());
+			statement.setString(2, usuario.getSenha());
+			statement.setString(3, usuario.getAcesso());
 			statement.execute();
 			
-			try (
-					PreparedStatement statement2 = conexao.prepareStatement("SELECT LAST_INSERT_ID()");
-					ResultSet resultado = statement2.executeQuery();
-				){
-				if (resultado.next()){
-					produto.setId(resultado.getInt(1));
-				}
 			}
-			catch (SQLException exception){
-				exception.printStackTrace();
-			}
-			
-		}
 		catch (SQLException exception){
 			exception.printStackTrace();
 		}
-		
-		return produto.getId();
 	}
 	
-	public Produto read(int idProduto){
-		Produto produtoCarregado = new Produto();
+	public Usuario read(String login){
+		Usuario usuarioCarregado = new Usuario();
 		
 		// Usando o Try com Resources do Java 7, seja lá como isso funciona
-		try (	Connection conexao = ConnectionFactory.obtemConexao();
-				PreparedStatement statement = conexao.prepareStatement("SELECT * FROM Produto WHERE id = ?");
-			){
-			
-			statement.setInt(1, produtoCarregado.getId());
-			try (ResultSet resultado = statement.executeQuery();) {
-				if (resultado.next()) {
-					produtoCarregado.setId(idProduto);
-					produtoCarregado.setNome(resultado.getString("nome"));
-					produtoCarregado.setDescricao(resultado.getString("descricao"));
-					produtoCarregado.setImagemURL(resultado.getString("imagemURL"));
-					produtoCarregado.setQtde(resultado.getInt("qtde"));
-					produtoCarregado.setPrecoCusto(resultado.getDouble("precoCusto"));
-					produtoCarregado.setPrecoVenda(resultado.getDouble("precoVenda"));
+				try (	Connection conexao = ConnectionFactory.obtemConexao();
+						PreparedStatement statement = conexao.prepareStatement("SELECT * FROM Usuario WHERE login = ?");
+					){
 					
-				} else {
-					produtoCarregado.setId(-1);
-					produtoCarregado.setNome(null);
-					produtoCarregado.setDescricao(null);
-					produtoCarregado.setImagemURL(null);
-					produtoCarregado.setQtde(-1);
-					produtoCarregado.setPrecoCusto(-1.0);
-					produtoCarregado.setPrecoVenda(-1.0);
+					statement.setString(1, login);
+					
+					try (ResultSet resultado = statement.executeQuery();) {
+						if (resultado.next()) {
+							usuarioCarregado.setLogin(resultado.getString("login"));
+							usuarioCarregado.setSenha(resultado.getString("senha")); // Seguro pra caralho.
+							usuarioCarregado.setAcesso(resultado.getString("acesso"));
+							
+						}
+						else {
+							usuarioCarregado.setLogin(null);
+							usuarioCarregado.setSenha(null);
+							usuarioCarregado.setAcesso(null);
+						}
+					}
+					catch (SQLException exception){
+							exception.printStackTrace();
+					}
 				}
-			}
-			catch (SQLException exception){
+				catch (SQLException exception){
 					exception.printStackTrace();
 				}
-		}
-		catch (SQLException exception){
-			exception.printStackTrace();
-		}
 		
-		return produtoCarregado;
+		return usuarioCarregado;
 	}
 	
-	public void update(Produto produto){
+	public void update(Usuario usuario){
 		// Usando o Try com Resources do Java 7, seja lá como isso funciona
 		try (	Connection conexao = ConnectionFactory.obtemConexao();
-				PreparedStatement statement = conexao.prepareStatement("UPDATE Produto SET precoCusto = ?, precoVenda = ?, nome = ?, descricao = ?, imagemURL = ?, qtde = ?) WHERE id = ?")
+				PreparedStatement statement = conexao.prepareStatement("UPDATE Usuario SET senha = ?, acesso = ? WHERE login = ?")
 			){
-			statement.setDouble(1, produto.getPrecoCusto());
-			statement.setDouble(2, produto.getPrecoVenda());
-			statement.setString(3, produto.getNome());
-			statement.setString(4, produto.getDescricao());
-			statement.setString(5, produto.getImagemURL());
-			statement.setInt(6, produto.getQtde());
-			statement.setInt(7, produto.getId());
+			statement.setString(1, usuario.getSenha());
+			statement.setString(2, usuario.getAcesso());
+			statement.setString(3, usuario.getLogin());
 			statement.execute();
 		}
 		catch (SQLException exception){
@@ -96,19 +77,29 @@ public class UsuarioDAO {
 		}
 	}
 	
-	public void delete(int idProduto){
-		try (	Connection conn = ConnectionFactory.obtemConexao();
-				PreparedStatement stm = conn.prepareStatement("DELETE FROM Produtos WHERE id = ?");
+	public void delete(String login){
+		try (	Connection conexao = ConnectionFactory.obtemConexao();
+				PreparedStatement statement = conexao.prepareStatement("DELETE FROM Usuario WHERE login = ?");
 			){
-			stm.setInt(1, idProduto);
-			stm.execute();
+			statement.setString(1, login);
+			statement.execute();
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
 	}
+	
+	public boolean validarSenha (String login, String senha){
+		return senha == read(login).getSenha(); // Sou preguiçoso e meti tudo na mesma linha. Me julguem.
+	}
+	
+	public String resetarSenha (String login){
+		Usuario usuario = read(login);
+		String senha = new BigInteger(130, new SecureRandom()).toString(32);
+		usuario.setSenha(senha);
+		update(usuario);
+		return senha;
+	}
+	
+	// TODO: Listar usuários.
 }
-
-
-}
-
