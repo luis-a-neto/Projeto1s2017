@@ -6,10 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Usuario;
 
-// Imports para geração de senha.
-import java.security.SecureRandom;
-import java.math.BigInteger;
-
 public class UsuarioDAO{
 	
 	public void create(Usuario usuario){ // Não retorna porque o login do usuário e a senha serão fornecidos previamente. Qualquer coisa, só resetar a senha depois!
@@ -88,18 +84,6 @@ public class UsuarioDAO{
 			exception.printStackTrace();
 		}
 	}
-	
-	public boolean validarSenha (String login, String senha){
-		return senha == read(login).getSenha(); // Sou preguiçoso e meti tudo na mesma linha. Me julguem.
-	}
-	
-	public String resetarSenha (String login){
-		Usuario usuario = read(login);
-		String senha = new BigInteger(130, new SecureRandom()).toString(32);
-		usuario.setSenha(senha);
-		update(usuario);
-		return senha;
-	}
-	
+
 	// TODO: Listar usuários.
 }
