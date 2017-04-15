@@ -10,29 +10,42 @@
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Usuários</title>
+		<title>Produtos</title>
 	</head>
 	<body>
 
-		<div class="jumbotron"><h1>Cadastro de Usuário</h1></div>
+		<div class="jumbotron"><h1>Cadastro de Produto</h1></div>
 		
 		<div class="container">
 			<form action="login.do" name="login" method="POST">
 				<div class="row form-group">
-					<div class="col-md-4"><label for="id">Usuário:</label></div>
-					<div class="col-md-8"><input type="text" class="form-control" name="login" disabled value="${Usuario.login}"/></div>
+					<div class="col-md-4"><label for="nome">Nome do produto:</label></div>
+					<div class="col-md-8"><input type="text" class="form-control" name="nome" accesskey="n"/></div>
+				</div>
+					
+				<div class="row form-group">
+					<div class="col-md-4"><label for="descricao">Descrição:</label></div>
+					<div class="col-md-8"><input type="text" class="form-control" name="descricao" accesskey="d"/></div>
 				</div>
 				
 				<div class="row form-group">
-					<div class="col-md-4"><label class="radio-inline"><input type="radio" name="acesso" value="gerente">Gerente</label></div>
-					<div class="col-md-4"><label class="radio-inline"><input type="radio" name="acesso" value="vendedor">Vendedor</label></div>
-					<div class="col-md-4"><label class="radio-inline"><input type="radio" name="acesso" value="estoque">Estoquista</label></div>
+					<div class="col-md-4"><label for="precoCusto">Preço de custo:</label></div>
+					<div class="col-md-8"><input type="text" class="form-control" name="precoCusto" accesskey="c"/></div>
+				</div>
+				
+				<div class="row form-group">
+					<div class="col-md-4"><label for="precoVenda">Preço de venda:</label></div>
+					<div class="col-md-8"><input type="text" class="form-control" name="precoVenda" accesskey="v"/></div>
+				</div>
+				
+				<div class="row form-group">
+					<div class="col-md-4"><label for="qtdEstoque">Quantidade em estoque:</label></div>
+					<div class="col-md-8"><input type="text" class="form-control" name="id" value="${Produto.qtdEstoque}"/></div>
 				</div>
 				
 				<div class="row">
 					<div class="btn-group btn-group-justified">
 						<div class="btn-group"><button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Salvar</button></div>
-						<div class="btn-group"><button class="btn btn-warning"><span class="glyphicon glyphicon-asterisk"></span> Reset de senha</button></div>
 						<div class="btn-group"><button type="reset" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span> Cancelar</button></div>
 					</div>
 				</div>

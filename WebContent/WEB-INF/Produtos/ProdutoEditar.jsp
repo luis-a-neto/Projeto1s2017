@@ -45,7 +45,7 @@
 				
 				<div class="row form-group">
 					<div class="col-md-4"><label for="qtdEstoque">Quantidade em estoque:</label></div>
-					<div class="col-md-8"><input type="text" class="form-control" name="id" disabled value="${Produto.qtdEstoque}"/></div>
+					<div class="col-md-8"><input type="text" class="form-control" name="id" value="${Produto.qtdEstoque}"/></div>
 				</div>
 				
 				<div class="row">

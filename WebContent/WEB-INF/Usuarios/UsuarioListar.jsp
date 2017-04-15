@@ -29,6 +29,13 @@
 						</tr>
 					</thead>
 					<tbody>
+						<c:if test="${not empty usuarios}">
+							<tr class="warning">
+								<td colspan="3">
+									Nenhum usuário cadastrado! Favor cadastrar pelo menos um usuário.
+								</td>
+							</tr>
+						</c:if>
 						<c:forEach var="usuario" items="${usuarios}">
 							<tr>
 								<td>${usuario.login}</td>
@@ -41,6 +48,14 @@
 								</td>
 							</tr>
 						</c:forEach>
+						<tr>
+							<td colspan="2">Novo usuário</td>
+							<td class="actions">
+								<div class="btn-group">
+									<a class="btn btn-primary btn-xs btn-group" href="criar_usuario">Adicionar</a>
+								</div>
+							</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>

@@ -10,12 +10,12 @@
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Produtos</title>
+		<title>Vendas</title>
 	</head>
 	
 	<body>
 	
-		<div class="jumbotron"><h1>Listagem de Produtos</h1></div>
+		<div class="jumbotron"><h1>Listagem de Pedidos</h1></div>
 		
 		<div class="container">
 			
@@ -23,43 +23,36 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-						    <th>Código</th>
-							<th>Nome</th>
-							<th>Descrição</th>
-							<th>Preço de Custo</th>
-							<th>Preço de Venda</th>
+						    <th>Número do pedido</th>
+							<th>Valor total</th>
 							<th class="actions">Ações</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:if test="${not empty produtos}">
+						<c:if test="${not empty vendas}">
 							<tr class="warning">
-								<td colspan="6">
-									Nenhum produto cadastrado! Favor cadastrar pelo menos um produto.
+								<td colspan="3">
+									Nenhum pedido cadastrado! Favor cadastrar pelo menos um pedido.
 								</td>
 							</tr>
 						</c:if>
-						<c:forEach var="produto" items="${produtos}">
+						<c:forEach var="venda" items="${vendas}">
 							<tr>
-								<td>${produto.id}</td>
-								<td>${produto.nome}</td>
-								<td>${produto.descricao}</td>
-								<td>${produto.precoCusto}</td>
-								<td>${produto.precoVenda}</td>
+								<td>${venda.id}</td>
+								<td>${venda.valorVenda}</td>
 								<td class="actions">
 									<div class="btn-group">
-										<a class="btn btn-info btn-xs btn-group" href="editar_produto?id=${produto.id}">Editar</a>
-										<a class="btn btn-danger btn-xs btn-group" href="deletar_produto?id=${produto.id}">Excluir</a>
+										<a class="btn btn-info btn-xs btn-group" href="editar_venda?id=${venda.id}">Editar</a>
+										<a class="btn btn-danger btn-xs btn-group" href="deletar_venda?id=${venda.id}">Excluir</a>
 									</div>
 								</td>
 							</tr>
 						</c:forEach>
 						<tr>
-							<td></td>
-							<td colspan="4">Novo produto</td>
+							<td colspan="2">Novo pedido</td>
 							<td class="actions">
 								<div class="btn-group">
-									<a class="btn btn-primary btn-xs btn-group" href="criar_produto">Adicionar</a>
+									<a class="btn btn-primary btn-xs btn-group" href="criar_usuario">Adicionar</a>
 								</div>
 							</td>
 						</tr>

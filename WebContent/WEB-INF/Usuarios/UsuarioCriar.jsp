@@ -20,7 +20,12 @@
 			<form action="login.do" name="login" method="POST">
 				<div class="row form-group">
 					<div class="col-md-4"><label for="id">Usuário:</label></div>
-					<div class="col-md-8"><input type="text" class="form-control" name="login" disabled value="${Usuario.login}"/></div>
+					<div class="col-md-8"><input type="text" class="form-control" name="login"/></div>
+				</div>
+				
+				<div class="row form-group">
+					<div class="col-md-4"><label for="id">Senha:</label></div>
+					<div class="col-md-8"><input type="password" class="form-control" name="senha"/></div>
 				</div>
 				
 				<div class="row form-group">
@@ -32,7 +37,6 @@
 				<div class="row">
 					<div class="btn-group btn-group-justified">
 						<div class="btn-group"><button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-floppy-disk"></span> Salvar</button></div>
-						<div class="btn-group"><button class="btn btn-warning"><span class="glyphicon glyphicon-asterisk"></span> Reset de senha</button></div>
 						<div class="btn-group"><button type="reset" class="btn btn-danger"><span class="glyphicon glyphicon-remove-sign"></span> Cancelar</button></div>
 					</div>
 				</div>
