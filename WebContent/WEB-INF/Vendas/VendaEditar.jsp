@@ -10,12 +10,12 @@
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<title>Vendas</title>
+		<title>Pedido</title>
 	</head>
 	
 	<body>
 	
-		<div class="jumbotron"><h1>Listagem de Pedidos</h1></div>
+		<div class="jumbotron"><h1>Visualizar pedido</h1></div>
 		
 		<div class="container">
 			
@@ -23,20 +23,22 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-						    <th>Número do pedido</th>
-							<th>Valor total</th>
+						    <th>Código do produto</th>
+						    <th>Nome</th>
+							<th>Valor unitário</th>
+							<th>Quantidade</th>
 							<th class="actions">Ações</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:if test="${not empty vendas}">
+						<c:if test="${not empty produtos}">
 							<tr class="warning">
 								<td colspan="3">
-									Nenhum pedido cadastrado! Favor cadastrar pelo menos um pedido.
+									Pedido vazio! Coloque pelo menos um produto.
 								</td>
 							</tr>
 						</c:if>
-						<c:forEach var="venda" items="${vendas}">
+						<c:forEach var="venda" items="${produtos}">
 							<tr>
 								<td>${venda.id}</td>
 								<td>${venda.valorVenda}</td>
