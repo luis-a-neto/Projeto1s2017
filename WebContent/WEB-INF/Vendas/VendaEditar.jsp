@@ -24,7 +24,7 @@
 					<thead>
 						<tr>
 						    <th>Código do produto</th>
-						    <th>Nome</th>
+						    <th>Descrição</th>
 							<th>Valor unitário</th>
 							<th>Quantidade</th>
 							<th class="actions">Ações</th>
@@ -38,23 +38,24 @@
 								</td>
 							</tr>
 						</c:if>
-						<c:forEach var="venda" items="${produtos}">
+						<c:forEach var="pv" items="${produtos}">
 							<tr>
-								<td>${venda.id}</td>
-								<td>${venda.valorVenda}</td>
+								<td>${pv.produto.id}</td>
+								<td>${pv.produto.descricao}</td>
+								<td>${pv.produto.precoVenda}</td>
+								<td>${pv.qtde}</td>
 								<td class="actions">
 									<div class="btn-group">
-										<a class="btn btn-info btn-xs btn-group" href="editar_venda?id=${venda.id}">Editar</a>
-										<a class="btn btn-danger btn-xs btn-group" href="deletar_venda?id=${venda.id}">Excluir</a>
+										<a class="btn btn-danger btn-xs btn-group" href="deletar_produtoVenda?id=${pv.id}">Excluir</a>
 									</div>
 								</td>
 							</tr>
 						</c:forEach>
 						<tr>
-							<td colspan="2">Novo pedido</td>
+							<td colspan="2">Adicionar produto</td>
 							<td class="actions">
 								<div class="btn-group">
-									<a class="btn btn-primary btn-xs btn-group" href="criar_venda">Adicionar</a>
+									<a class="btn btn-primary btn-xs btn-group" href="criar_produtoVenda?idVenda=${venda.id}">Adicionar</a>
 								</div>
 							</td>
 						</tr>

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import model.Venda;
 
@@ -93,5 +94,32 @@ public class VendaDAO {
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
+	}
+	
+	public ArrayList<Venda> list(){
+		ArrayList<Venda> lista = new ArrayList<Venda>();
+		
+		try (	Connection conn = ConnectionFactory.obtemConexao();
+				PreparedStatement statement = conn.prepareStatement("SELECT * FROM Venda");
+			){
+			
+			try (ResultSet resultado = statement.executeQuery();) {
+				while (resultado.next()) {
+					
+					Venda vendaCarregada = new Venda();
+						vendaCarregada.setId(resultado.getInt("Id"));
+						vendaCarregada.setValorVenda(resultado.getDouble("Valor"));
+					}
+				}
+				catch (SQLException exception){
+						exception.printStackTrace();
+				}
+			}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return lista;
 	}
 }

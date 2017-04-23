@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import model.ProdutoVenda;
 import model.Produto;
@@ -11,7 +12,7 @@ import model.Venda;
 
 public class ProdutoVendaDAO {
 	
-public int create(ProdutoVenda produtoVenda){
+	public int create(ProdutoVenda produtoVenda){
 		
 		int id = -1;
 		
@@ -114,6 +115,45 @@ public int create(ProdutoVenda produtoVenda){
 		catch (Exception exception) {
 			exception.printStackTrace();
 		}
+	}
+	
+	public ArrayList<ProdutoVenda> list(int id){
+		
+		ArrayList<ProdutoVenda> lista = new ArrayList<ProdutoVenda>();
+		
+		try (	Connection conn = ConnectionFactory.obtemConexao();
+				PreparedStatement statement = conn.prepareStatement("SELECT * FROM Produto_Venda WHERE Cod_Venda = ?");
+			){
+			statement.setInt(1, id);
+			
+			try (ResultSet resultado = statement.executeQuery();) {
+				while (resultado.next()) {
+					ProdutoVenda produtoVendaCarregado = new ProdutoVenda();
+					
+					produtoVendaCarregado.setId(id);
+					produtoVendaCarregado.setQtde(resultado.getInt("Quantidade"));
+
+					VendaDAO vendaDAO = new VendaDAO();
+					ProdutoDAO produtoDAO = new ProdutoDAO();
+					
+					Venda venda = vendaDAO.read(resultado.getInt("Cod_Venda"));
+					Produto produto = produtoDAO.read(resultado.getInt("Cod_Produto"));
+					
+					produtoVendaCarregado.setVenda(venda);
+					produtoVendaCarregado.setProduto(produto);
+
+					lista.add(produtoVendaCarregado);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		
+		return lista;
 	}
 
 }
