@@ -5,13 +5,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import java.util.ArrayList;
-import dao.VendaDAO;
 import dao.ProdutoVendaDAO;
-import model.ProdutoVenda;
-import model.Venda;
+import dao.VendaDAO;
 
-public class criarPedido implements Command {
+public class CriarPedido implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
@@ -20,13 +17,12 @@ public class criarPedido implements Command {
 		ProdutoVendaDAO pvDao = new ProdutoVendaDAO();
 		
 		try {
+			
 			int idVenda = vendaDao.create();
-			ArrayList<ProdutoVenda> listaProdutos = pvDao.list(idVenda);
-			Venda venda = vendaDao.read(idVenda);
 			
 			HttpSession session = request.getSession();
-			session.setAttribute("produtos", listaProdutos);
-			session.setAttribute("venda", venda);
+			session.setAttribute("produtos", pvDao.list(idVenda));
+			session.setAttribute("venda", vendaDao.read(idVenda));
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/Vendas/VendaEditar.jsp");
 			dispatcher.forward(request,response);

@@ -23,9 +23,7 @@
 				<table class="table table-striped">
 					<thead>
 						<tr>
-						    <th>Código do produto</th>
 						    <th>Descrição</th>
-							<th>Valor unitário</th>
 							<th>Quantidade</th>
 							<th class="actions">Ações</th>
 						</tr>
@@ -40,9 +38,7 @@
 						</c:if>
 						<c:forEach var="pv" items="${produtos}">
 							<tr>
-								<td>${pv.produto.id}</td>
 								<td>${pv.produto.descricao}</td>
-								<td>${pv.produto.precoVenda}</td>
 								<td>${pv.qtde}</td>
 								<td class="actions">
 									<div class="btn-group">
@@ -55,7 +51,7 @@
 							<td colspan="2">Adicionar produto</td>
 							<td class="actions">
 								<div class="btn-group">
-									<a class="btn btn-primary btn-xs btn-group" href="criar_produtoVenda?idVenda=${venda.id}">Adicionar</a>
+									<a class="btn btn-danger btn-xs btn-group" href="criar_produtoVenda?id=${venda.id}">Adicionar</a>
 								</div>
 							</td>
 						</tr>

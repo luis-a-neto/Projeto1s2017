@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import model.Produto;
 
 public class ProdutoDAO {
@@ -113,5 +115,39 @@ public class ProdutoDAO {
 		}
 	}
 	
-	// TODO: Listar produtos.
+	public ArrayList<Produto> list(){
+		
+		ArrayList<Produto> lista = new ArrayList<Produto>();
+		
+		try (	Connection conexao = ConnectionFactory.obtemConexao();
+				PreparedStatement statement = conexao.prepareStatement("SELECT * FROM Estoque");
+			){
+			
+			try (ResultSet resultado = statement.executeQuery();) {
+				while (resultado.next()) {
+					Produto produtoCarregado = new Produto();
+					
+					produtoCarregado.setId(			resultado.getInt("Id")				);
+					produtoCarregado.setNome(		resultado.getString("Nome")			);
+					produtoCarregado.setDescricao(	resultado.getString("Descricao")	);
+					produtoCarregado.setImagemURL(	resultado.getString("Imagem_URL")	);
+					produtoCarregado.setQtde(		resultado.getInt("Qtde")			);
+					produtoCarregado.setPrecoCusto(	resultado.getDouble("Preco_Custo")	);
+					produtoCarregado.setPrecoVenda(	resultado.getDouble("Preco_Venda")	);
+					
+					
+					lista.add(produtoCarregado);
+				}
+			}
+			catch (SQLException exception){
+					exception.printStackTrace();
+			}
+		}
+		catch (SQLException exception){
+			exception.printStackTrace();
+		}
+		
+		return lista;
+		
+	}
 }
