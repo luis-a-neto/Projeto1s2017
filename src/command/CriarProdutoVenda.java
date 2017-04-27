@@ -62,12 +62,7 @@ public class CriarProdutoVenda implements Command {
 				dispatcher.forward(request,response);
 			}
 			catch (Exception e){
-				
 			}
 		}
-		
-		
-		
 	}
-
 }
