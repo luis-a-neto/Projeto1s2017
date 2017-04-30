@@ -4,18 +4,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
  
 import model.Usuario;
-import service.UsuarioService;
+import dao.UsuarioDAO;
 
 
 public class CriarUsuario implements Command {
 
 	@Override
-	public void executar(HttpServletRequest request,
+	public void execute(HttpServletRequest request,
 			HttpServletResponse response) {
 		String Login = request.getParameter("login");
 		String Senha = request.getParameter("senha");
@@ -26,17 +27,23 @@ public class CriarUsuario implements Command {
 		usuario.setLogin(Login);
 		usuario.setSenha(Senha);
 		usuario.setAcesso(Acesso);
-		UsuarioService us = new UsuarioService();
+		UsuarioDAO usuarioDao = new UsuarioDAO();
 
 		RequestDispatcher view = null;
 		HttpSession session = request.getSession();
 
-		criar(usuario);
-		ArrayList<Usuario> lista = new ArrayList<>();
-		lista.add(usuario);
-		session.setAttribute("lista", lista);
-		view = request.getRequestDispatcher("Vendas/VendaListar.jsp");
+		usuarioDao.create(usuario);
 
-		view.forward(request, response);
+		ArrayList<Usuario> lista = usuarioDao.list();
+		session.setAttribute("lista", lista);
+		view = request.getRequestDispatcher("Usuarios/UsuarioListar.jsp");
+
+		try {
+			view.forward(request, response);
+		} catch (ServletException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

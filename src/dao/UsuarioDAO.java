@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import model.Usuario;
 
 public class UsuarioDAO{
@@ -84,6 +86,32 @@ public class UsuarioDAO{
 			exception.printStackTrace();
 		}
 	}
-
-	// TODO: Listar usuários.
+	
+	public ArrayList<Usuario> list(){
+		ArrayList<Usuario> lista = new ArrayList<Usuario>();
+		
+		try (	Connection conn = ConnectionFactory.obtemConexao();
+				PreparedStatement statement = conn.prepareStatement("SELECT * FROM Usuario");
+			){
+			
+			try (ResultSet resultado = statement.executeQuery();) {
+				while (resultado.next()) {
+					
+					Usuario usuarioCarregado = new Usuario();
+						usuarioCarregado.setLogin(resultado.getString("login"));
+						usuarioCarregado.setSenha(resultado.getString("senha"));
+						usuarioCarregado.setAcesso(resultado.getString("acesso"));
+					}
+				}
+				catch (SQLException exception){
+						exception.printStackTrace();
+				}
+			}
+		
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return lista;
+	}
 }

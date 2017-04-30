@@ -130,7 +130,7 @@ public class ProdutoVendaDAO {
 				while (resultado.next()) {
 					ProdutoVenda produtoVendaCarregado = new ProdutoVenda();
 					
-					produtoVendaCarregado.setId(id);
+					produtoVendaCarregado.setId(resultado.getInt("id"));
 					produtoVendaCarregado.setQtde(resultado.getInt("Quantidade"));
 
 					VendaDAO vendaDAO = new VendaDAO();
