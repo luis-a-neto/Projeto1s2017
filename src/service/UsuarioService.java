@@ -3,6 +3,7 @@ package service;
 // Imports para geração de senha aleatória.
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 
 import dao.UsuarioDAO;
 import model.Usuario;
@@ -38,6 +39,10 @@ public class UsuarioService {
 		usuario.setSenha(senha);
 		update(usuario);
 		return senha;
+	}
+	
+	public ArrayList<Usuario> list(){
+		return dao.list();
 	}
 
 }

@@ -1,5 +1,7 @@
 package service;
 
+import java.util.ArrayList;
+
 import dao.ProdutoVendaDAO;
 import model.ProdutoVenda;
 
@@ -21,6 +23,10 @@ public class ProdutoVendaService {
 	
 	public void delete(int id){
 		dao.delete(id);
+	}
+	
+	public ArrayList<ProdutoVenda> list(int id){
+		return dao.list(id);
 	}
 
 }
