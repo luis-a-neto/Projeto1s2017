@@ -28,7 +28,6 @@ public class UsuarioService {
 		dao.delete(id);
 	}
 	
-	
 	public boolean validarSenha (String login, String senha){
 		return senha == read(login).getSenha(); // Sou preguiçoso e meti tudo na mesma linha. Me julguem.
 	}
