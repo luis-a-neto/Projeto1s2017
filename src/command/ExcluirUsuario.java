@@ -18,7 +18,7 @@ public class ExcluirUsuario implements Command {
 			usuarioService.delete(request.getParameter("login"));
 			session.setAttribute("lista", usuarioService.list());
 			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/Produtos/ProdutoListar.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/Usuarios/UsuarioListar.jsp");
 			dispatcher.forward(request,response);
 		}
 		catch ( Exception e ){
