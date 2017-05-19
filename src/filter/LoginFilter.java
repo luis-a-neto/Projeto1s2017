@@ -19,7 +19,6 @@ public class LoginFilter implements Filter {
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -42,14 +41,11 @@ public class LoginFilter implements Filter {
 		else {
 			chain.doFilter(request, response);
 		}
-		
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		// TODO Auto-generated method stub
 
 	}
 
